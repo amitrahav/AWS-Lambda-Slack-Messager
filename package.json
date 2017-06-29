@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "slack-webhook": "^1.0.0",
+    "yarn": "0.24.5"
+  },
+  "name": "slacknode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
