@@ -6,7 +6,7 @@ this is a lambda function for sending slack message at any chanel.
 * use env veribals to set details:
 	* MESSAGE = slack message
 	* URL = the link to attach at the end of the message.
-	* CHANEL = #slack chanel
+	* CHANNEL = #slack channel
 	* SLACKWEBHOOKURL = slack webhook url as provided [https://YOURGROUP.slack.com/apps/manage/custom-integrations](https://api.slack.com/incoming-webhooks)
 * the notification displayed next to screaming cat icon.
 * don't forget to attach aws role the lambda:ListFunctions premmision.
