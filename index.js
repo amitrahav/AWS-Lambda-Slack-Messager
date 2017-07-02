@@ -26,7 +26,7 @@ exports.handler = (event, context, callback) => {
 
     var putJobSuccess = function(message) {
         var params = {
-            jobId: jobId
+            jobId: CPjobId
         };
         codepipeline.putJobSuccessResult(params, function(err, data) {
             if(err) {
@@ -39,7 +39,7 @@ exports.handler = (event, context, callback) => {
 
     var putJobFailure = function(message) {
         var params = {
-            jobId: jobId,
+            jobId: CPjobId,
             failureDetails: {
                 message: JSON.stringify(message),
                 type: 'JobFailed',
