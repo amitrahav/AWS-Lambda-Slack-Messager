@@ -14,13 +14,13 @@ exports.handler = (event, context, callback) => {
     
     // Retrieve the value of UserParameters from the Lambda action configuration in AWS CodePipeline, in this case a URL which will be
     // health checked by this function.
-    const CPuserParameters = event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters; 
-    
+    const CPuserParameters = JSON.parse( event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters); 
+    console.log('userParams: ' , CPuserParameters);
     // ----- GENRAL VARS ---- //
-    let channel = JSON.parse(CPuserParameters).channel || process.env.CHANNEL || '#general'
-    let SlackWebhookUrl = JSON.parse(CPuserParameters).slackwebhook || process.env.SLACKWEBHOOKURL || 'https://hooks.slack.com/services/user/hook'
-    let deployUrl = JSON.parse(CPuserParameters).url || process.env.URL || 'http://ec2-someIP.compute.amazonaws.com/';
-    let message = JSON.parse(CPuserParameters).message || process.env.MESSAGE || 'Successfully deploy at ';
+    let channel = CPuserParameters.channel || process.env.CHANNEL || '#general';
+    let SlackWebhookUrl = CPuserParameters.slackwebhook || process.env.SLACKWEBHOOKURL || 'https://hooks.slack.com/services/user/hook';
+    let deployUrl = CPuserParameters.url || process.env.URL || 'http://ec2-someIP.compute.amazonaws.com/';
+    let message = CPuserParameters.message || process.env.MESSAGE || 'Successfully deploy at ';
 
 
     var putJobSuccess = function(message) {
@@ -29,9 +29,10 @@ exports.handler = (event, context, callback) => {
         };
         codepipeline.putJobSuccessResult(params, function(err, data) {
             if(err) {
+                console.error(JSON.stringify(err));
                 context.fail(err);      
             } else {
-                context.succeed('all went fine');      
+                callback(null, 'all went fine');      
             }
         });
     };
@@ -46,22 +47,25 @@ exports.handler = (event, context, callback) => {
             }
         };
         codepipeline.putJobFailureResult(params, function(err, data) {
+            console.error(JSON.stringify(err));
             context.fail(message);      
         });
     };
 
 	let slack = new SlackWebhook(SlackWebhookUrl);
 	slack.send({
-	  text: message + deployUrl,
+	  text: message + ' ' + deployUrl,
 	  username: 'AWS finshed auto code deploy',
 	  icon_emoji: ':scream_cat:',
 	  channel: channel
 	}).then(function (res) {
 	  // succesful request 
 	  // Notify AWS CodePipeline of a successful job
+      console.error(JSON.stringify(res));
 	   putJobSuccess('all went fine');  // Echo back the first key value
 	}).catch(function (err) {
 	  // handle request error 
+        console.error(JSON.stringify(err));
 	   putJobFailure(err);  // Echo back the first key value
 	});
 
