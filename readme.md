@@ -2,7 +2,8 @@
 this is a lambda function for sending slack message at any chanel.
 
 ##usage
-* upload zipfile.zip into aws new lambda function.
+* upload codeDeploySlackWebhook.zip into aws new lambda function named:"codeDeploySlackWebhook".
+* you can also download this repo and run `$ source zipandload.sh`
 * you can use aither codepipline parameters or lambda env vars.
 * codepipline user paramters usage:
   * edit satge at code deploy. under aws lambda function name, input at the user paremetrs input this kind of json:
@@ -22,4 +23,4 @@ this is a lambda function for sending slack message at any chanel.
 * run `nvm use` in case you using nvm. - **this is important because only specific node versions are allowed at lambda.**
 * you can test function localy on index_ex.js
 * index.js is wrapped with lambda handler.
-* rebuild zip by `source zip.sh`
+* rebuild zip and upload it to lambda by the name "codeDeploySlackWebhook" by running `$source zipandload.sh`

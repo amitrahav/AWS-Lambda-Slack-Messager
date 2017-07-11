@@ -15,13 +15,12 @@ exports.handler = (event, context, callback) => {
     // Retrieve the value of UserParameters from the Lambda action configuration in AWS CodePipeline, in this case a URL which will be
     // health checked by this function.
     const CPuserParameters = event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters; 
-
     
-	// ----- GENRAL VARS ---- //
-	let channel = CPuserParameters.channel || process.env.CHANNEL || '#general'
-	let SlackWebhookUrl = CPuserParameters.slackwebhook || process.env.SLACKWEBHOOKURL || 'https://hooks.slack.com/services/user/hook'
-	let deployUrl = CPuserParameters.url || process.env.URL || 'http://ec2-someIP.compute.amazonaws.com/';
-	let message = CPuserParameters.message || process.env.MESSAGE || 'Successfully deploy at ';
+    // ----- GENRAL VARS ---- //
+    let channel = JSON.parse(CPuserParameters).channel || process.env.CHANNEL || '#general'
+    let SlackWebhookUrl = JSON.parse(CPuserParameters).slackwebhook || process.env.SLACKWEBHOOKURL || 'https://hooks.slack.com/services/user/hook'
+    let deployUrl = JSON.parse(CPuserParameters).url || process.env.URL || 'http://ec2-someIP.compute.amazonaws.com/';
+    let message = JSON.parse(CPuserParameters).message || process.env.MESSAGE || 'Successfully deploy at ';
 
 
     var putJobSuccess = function(message) {
