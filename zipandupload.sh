@@ -1,2 +1,2 @@
 #!/bin/bash
-zip -r codeDeploySlackWebhook.zip . -x ".*" -x "*/.*" -x ".gitignore" -x ".git/" -x "*.zip" -x "zipandupload.sh" -x "readme.md" && aws lambda update-function-code --function-name=codeDeploySlackWebhook --zip-file=fileb://$(pwd)/codeDeploySlackWebhook.zip --profile dror
+zip -r codeDeploySlackWebhook.zip . -x ".*" -x "*/.*" -x ".gitignore" -x ".git/" -x "*.zip" -x "zipandupload.sh" -x "readme.md" && aws lambda update-function-code --function-name=codeDeploySlackWebhook --zip-file=fileb://$(pwd)/codeDeploySlackWebhook.zip
