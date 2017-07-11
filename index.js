@@ -29,7 +29,7 @@ exports.handler = (event, context, callback) => {
         };
         codepipeline.putJobSuccessResult(params, function(err, data) {
             if(err) {
-                console.error(JSON.stringify(err));
+                console.log(JSON.stringify(err));
                 context.fail(err);      
             } else {
                 callback(null, 'all went fine');      
@@ -47,7 +47,7 @@ exports.handler = (event, context, callback) => {
             }
         };
         codepipeline.putJobFailureResult(params, function(err, data) {
-            console.error(JSON.stringify(err));
+            console.log(JSON.stringify(err));
             context.fail(message);      
         });
     };
@@ -61,11 +61,9 @@ exports.handler = (event, context, callback) => {
 	}).then(function (res) {
 	  // succesful request 
 	  // Notify AWS CodePipeline of a successful job
-      console.error(JSON.stringify(res));
 	   putJobSuccess('all went fine');  // Echo back the first key value
 	}).catch(function (err) {
 	  // handle request error 
-        console.error(JSON.stringify(err));
 	   putJobFailure(err);  // Echo back the first key value
 	});
 
